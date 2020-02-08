@@ -2,31 +2,17 @@ package com.ruwork.web.dal;
 
 import com.ruwork.web.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 
 @Service
 public class CustomerDAO {
 
-
-    @Qualifier("elasticsearchTemplate")
-    @Autowired
-    private ElasticsearchRestTemplate elasticsearchTemplate;
-
     @Autowired
     private CustomerRepository customerRepository;
 
-        @PostConstruct
-        public void init(){
-            if (!elasticsearchTemplate.indexExists("customer")){
-                elasticsearchTemplate.createIndex("customer");
-            }
-        }
 
         public Customer save(Customer customer){
 

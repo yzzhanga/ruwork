@@ -35,15 +35,11 @@ class WebApplicationTests {
 	private CustomerDAO customerDAO;
 
 
-	@Test
-	void contextLoads() {
-	}
-
 
 	@Test
 	void esConnectionTest(){
-		elasticsearchOperations.deleteIndex("ruwork");
-		Assert.isTrue(!elasticsearchOperations.indexExists("ruwork"),"此时索引不存在");
+//		elasticsearchOperations.deleteIndex("ruwork");
+//		Assert.isTrue(!elasticsearchOperations.indexExists("ruwork"),"此时索引不存在");
 		Sale sale = new Sale();
 		sale.setId("1");
 		sale.setName("zhangsasn");
@@ -53,18 +49,13 @@ class WebApplicationTests {
 				.withId(sale.getId())
 				.withObject(sale)
 				.build();
+		elasticsearchOperations.createIndex(Sale.class);
 		elasticsearchOperations.index(indexQuery);
-		Assert.isTrue(elasticsearchOperations.indexExists("ruwork"),"此时索引存在");
-
-	}
-
-	@Test
-	void esSaleDao(){
-
+		Assert.isTrue(elasticsearchOperations.indexExists(Sale.class),"此时索引存在");
 		Assert.isTrue(saleRepository.count()>0,"sale库有数据");
 
-		Sale sale = saleDAO.querySaleByPhoneAndIdentity("123000","123231203");
-		Assert.notNull(sale,sale.getName());
+		Sale sale1 = saleDAO.querySaleByPhoneAndIdentity("123000","123231203");
+		Assert.notNull(sale1,sale1.getName());
 
 		Assert.isTrue(customerRepository.count()==0,"初始化时没有值");
 
@@ -75,5 +66,8 @@ class WebApplicationTests {
 		customer.setSaleCode("123000");
 		Customer  resp = customerDAO.save(customer);
 		Assert.notNull(resp,resp.getName());
+
 	}
+
+
 }
