@@ -73,7 +73,7 @@ class WebApplicationTests {
 		customer.setCellphone("18600404539");
 		customer.setName("张三");
 		customer.setSaleCode("123000");
-		Customer  resp = customerRepository.save(customer);
+		Customer  resp = customerDAO.save(customer);
 		Assert.notNull(resp,resp.getName());
 	}
 }

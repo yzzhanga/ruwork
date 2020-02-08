@@ -28,6 +28,14 @@ public class CustomerDAO {
             }
         }
 
+        public Customer save(Customer customer){
+
+            customerRepository.save(customer);
+
+
+            return customer;
+        }
+
 
 
 
