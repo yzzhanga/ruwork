@@ -53,8 +53,23 @@ public class ExcelResolver {
                 List<String> cells = new ArrayList<>();
                 for (int y = row.getFirstCellNum(); y < row.getLastCellNum(); y++) {
                     cell = row.getCell(y);
-
-                    cells.add( cell.getStringCellValue());
+                    int CELL_TYPE_NUMERIC = 0;
+                    int CELL_TYPE_STRING = 1;
+                    int CELL_TYPE_FORMULA = 2;
+                    int CELL_TYPE_BLANK = 3;
+                    int CELL_TYPE_BOOLEAN = 4;
+                    switch (cell.getCellType()) {
+                        case Cell.CELL_TYPE_NUMERIC:
+                            cells.add(String.valueOf(cell.getNumericCellValue()));
+                            break;
+                        case Cell.CELL_TYPE_STRING:
+                            cells.add(cell.getStringCellValue());
+                            break;
+                        case Cell.CELL_TYPE_FORMULA:
+                        case Cell.CELL_TYPE_BLANK:
+                        case Cell.CELL_TYPE_BOOLEAN:
+                        default:
+                    }
                 }
                 rows.add(cells);
             }

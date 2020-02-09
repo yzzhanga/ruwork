@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 @Service
@@ -25,9 +26,9 @@ public class ExcelFileProcessService {
     private ExcelResolver excelResolver;
 
 
-    public FileData resolve(File dest) throws Exception {
+    public FileData resolve(InputStream in ,String  fileName) throws Exception {
 
-        return    new FileData( excelResolver.resolve(dest)) ;
+        return    new FileData( excelResolver.getBankListByExcel(in,fileName)) ;
     }
 
     public void saveSaleData(List<Sale> saleData) {

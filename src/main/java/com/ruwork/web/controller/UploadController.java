@@ -5,6 +5,7 @@ import com.ruwork.web.model.CustomerModel;
 import com.ruwork.web.model.SaleModel;
 import com.ruwork.web.service.ExcelFileProcessService;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ import java.util.List;
 @Log
 public class UploadController {
 
+    @Autowired
     private ExcelFileProcessService excelFileProcessService;
 
     @RequestMapping(path = "/upload")
@@ -36,19 +38,21 @@ public class UploadController {
         if (file.isEmpty()) {
             return "上传失败，请选择文件";
         }
-        String fileName = file.getOriginalFilename();
-        String filePath = System.getenv("FILEPATH")+"/tmp/ruwork";
-        File dir = new File(filePath);
-        if (!dir.exists()) dir.mkdirs();
-        File dest = new File(filePath + fileName);
+//        String fileName = file.getOriginalFilename();
+//        String filePath = System.getenv("FILEPATH")+"/tmp/ruwork";
+//        File dir = new File(filePath);
+//        if (!dir.exists()) dir.mkdirs();
+//        File dest = new File(filePath + fileName);
         try {
-            file.transferTo(dest);
-            FileData fileData =  excelFileProcessService.resolve(dest);
+//            file.transferTo(dest);
+            FileData fileData =  excelFileProcessService.resolve(file.getInputStream(),file.getOriginalFilename());
             excelFileProcessService.saveSaleData(fileData.getSaleData());
             excelFileProcessService.saveCustomerData(fileData.getCustomerData());
             log.info("上传成功");
             return "上传成功";
         } catch ( IOException e) {
+            log.warning(e.toString());
+        } catch (Exception e) {
             log.warning(e.toString());
         }
         return "上传失败！";
