@@ -5,12 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
 public interface CustomerRepository extends Repository<Customer,String> {
 
-    Page<Customer> findCustomersBySaleCode(String saleCode, Pageable pageable);
+    List<Customer> findCustomersByCellphone(String cellphone);
+
+    Page<Customer> findBySaleCode(String saleCode, Pageable pageable);
 
     Customer save(Customer entity);
 

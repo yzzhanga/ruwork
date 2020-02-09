@@ -6,10 +6,13 @@ import com.ruwork.web.dal.SaleDAO;
 import com.ruwork.web.dal.SaleRepository;
 import com.ruwork.web.entity.Customer;
 import com.ruwork.web.entity.Sale;
+import com.ruwork.web.model.CustomerModel;
+import com.ruwork.web.service.CustomerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQueryBuilder;
@@ -33,6 +36,9 @@ class WebApplicationTests {
 
 	@Autowired
 	private CustomerDAO customerDAO;
+
+	@Autowired
+	private CustomerService customerService;
 
 
 
@@ -69,5 +75,15 @@ class WebApplicationTests {
 
 	}
 
+
+	@Test
+	public void CustomerServiceTest(){
+
+		Page<CustomerModel> page =  customerService.queryCustomerBySale("123000",1,10);
+
+		Assert.isTrue(!page.isEmpty(),"有一条记录");
+		Assert.notNull(page.get().findFirst(),"记录不为空");
+
+	}
 
 }

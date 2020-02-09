@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Appender type="Console" name="STDOUT">
+            <Layout type="PatternLayout" pattern="%d %p %C{1.} [%t] %m%n"/>
+        </Appender>
+
+
+    </Appenders>
+
+    <Loggers>
+
+        <logger name="org.springframework.data.elasticsearch.client.WIRE" level="trace">
+             <AppenderRef ref="STDOUT"/>
+        <logger>
+
+    </logger>
+
+        <Root level="trace">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

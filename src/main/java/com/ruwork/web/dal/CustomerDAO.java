@@ -1,13 +1,19 @@
 package com.ruwork.web.dal;
 
 import com.ruwork.web.entity.Customer;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
+@Log
 public class CustomerDAO {
 
     @Autowired
@@ -26,8 +32,8 @@ public class CustomerDAO {
 
 
         public Page<Customer> queryBySaleAndPage(String saleCode,int page,int size){
-            PageRequest pageArgs = PageRequest.of(page,size);
-            return customerRepository.findCustomersBySaleCode(saleCode,pageArgs);
+            Pageable pageArgs = PageRequest.of(page,size).first();
+            return customerRepository.findBySaleCode(saleCode,pageArgs);
         }
 
 }
