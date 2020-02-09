@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta content="text/html" charset="utf-8" />
+    <title>销售查询页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+    <meta content="zhangyingzheng" name="author" />
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+    <!-- DataTables -->
+    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- Responsive datatable examples -->
+    <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- App css -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/metismenu.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+<input id="ticket" type="hidden" th:value="${ticket}" />
+<div class="page-wrapper">
+
+    <!-- Page Content-->
+    <div class="page-content">
+
+        <div class="container-fluid">
+
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h5 class="mt-0">客户表格</h5>
+
+                            <div class="table-responsive">
+                                <table id="ruworkTable" class="table table-bordered" style="width: 100%">
+                                    <thead>
+                                    <tr>
+                                        <th>客户</th>
+                                        <th>手机号</th>
+                                        <th>客户类型</th>
+
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+
+        </div><!-- container -->
+
+    </div>
+    <!-- end page content -->
+</div>
+<!-- end page-wrapper -->
+
+
+<!-- jQuery  -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/metisMenu.min.js"></script>
+<script src="assets/js/waves.min.js"></script>
+<script src="assets/js/jquery.slimscroll.min.js"></script>
+
+<!-- Required datatable js -->
+<script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+<!-- Buttons examples -->
+<script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
+<script src="assets/plugins/datatables/jszip.min.js"></script>
+<script src="assets/plugins/datatables/pdfmake.min.js"></script>
+<script src="assets/plugins/datatables/vfs_fonts.js"></script>
+<script src="assets/plugins/datatables/buttons.html5.min.js"></script>
+<script src="assets/plugins/datatables/buttons.print.min.js"></script>
+<script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
+<!-- Responsive examples -->
+<script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
+
+<!-- Datatable init js -->
+<script src="assets/pages/jquery.table-datatable.js"></script>
+
+<!-- App js -->
+<script src="assets/js/app.js"></script>
+
+
+<script>
+
+    $(document).ready(function() {
+
+
+        $.post("/query",{ticket:$("#ticket").val(),page:1,size:10000},function(result){
+            if (result){
+                $('#ruworkTable').DataTable( {
+                    data: result,
+                    columns: [
+                        { title:"客户", data: "name" },
+                        {title:"电话号码", data: "cellphone" },
+                        { title:"客户类型", data: "type" }
+                    ]
+                } );
+
+            }
+        });
+    } );
+
+
+
+</script>
+
+</body>
+</html>

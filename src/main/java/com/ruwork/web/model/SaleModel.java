@@ -11,4 +11,5 @@ public class SaleModel {
     private String saleCode;
     private String cellphone;
     private String identity;
+    private Long ticket;
 }

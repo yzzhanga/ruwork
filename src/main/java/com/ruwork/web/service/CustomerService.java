@@ -25,6 +25,9 @@ public class CustomerService {
 
     }
 
+
+
+
     private CustomerModel cover(Customer customer) {
         CustomerModel model = new CustomerModel();
         BeanUtils.copyProperties(customer,model);
